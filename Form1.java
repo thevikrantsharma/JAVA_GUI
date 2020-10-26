@@ -9,14 +9,16 @@ public class Form1 extends JFrame implements ActionListener
 	JButton submitBt;
 	JTextField nameTf, rollnoTf, stateTf;
 	JLabel nameLb, rollnoLb,stateLb;
+	Connection con;
+	Statement smt;
 	Form1()
 	{
 		try
 		{
 		
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","abcd");
-			Statement smt=con.createStatement();
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","abcd");
+			smt=con.createStatement();
 			ResultSet rs=smt.executeQuery("select * from stu_table");
 			while(rs.next()) 
 			{
@@ -64,6 +66,13 @@ public class Form1 extends JFrame implements ActionListener
 			System.out.println("Name :"+name);
 			System.out.println("RollNo :"+rollno);
 			System.out.println("State  :"+state);
+			
+			String query="insert into stu_table(name, rollno, state) values('"+name+"','"+rollno+"','"+state+"');";
+			try
+			{
+				smt.executeUpdate(query);
+			}
+			catch(Exception e1) {System .out.println(e1);}
 		}
 	}
 
