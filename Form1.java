@@ -11,6 +11,26 @@ public class Form1 extends JFrame implements ActionListener
 	JLabel nameLb, rollnoLb,stateLb;
 	Form1()
 	{
+		try
+		{
+		
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","abcd");
+			Statement smt=con.createStatement();
+			ResultSet rs=smt.executeQuery("select * from stu_table");
+			while(rs.next()) 
+			{
+				System.out.println(rs.getString(1));
+				System.out.println(rs.getString(2));
+				System.out.println(rs.getString(3));
+			}
+		}
+		catch(Exception e) {
+			System.out.println("SQL Exception raised");
+			e.printStackTrace();
+			}
+		
+		
 		nameLb=new JLabel("Name");
 		rollnoLb=new JLabel("Roll NO:");
 		stateLb=new JLabel("State");
